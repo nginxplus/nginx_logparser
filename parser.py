@@ -5,10 +5,7 @@ import sqlite3
 
 def push_data(data):
 
-#	conn = sqlite3.connect('nginx.db')
-#	cur = conn.cursor()
-	req = 'INSERT INTO access(ip, date, method) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\');'
-	print(req)
+	req = 'INSERT INTO access(ip, date, method, uri, code) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\', \'' + data["uri"] + '\', \'' + data["code"] + '\');'
 	cur.execute(req)
 
 
@@ -31,9 +28,10 @@ while line != "":
 		client_req = re.search(r'\"[A-Z]{3,}[^\"]*', line).group(0)[1:]
 		uri = client_req[(client_req.find(" "))+1:(client_req.rfind(" "))]
 		method = client_req[:(client_req.find(" "))] 
+		code = re.search(r"[ ][0-9]{3}[ ]", line).group(0)[1:-1]
 		client_platform = re.search(r'\"[^\"]*\"$', line).group(0)[1:-1]
+		#platform = re.search(r"", line).group(0)
 		#domain = re.search(r"", line).group(0)
-		#code = re.search(r"", line).group(0)
 		#os = re.search(r"", line).group(0)
 
 		if valid_pages.count(page) is not 0:
@@ -41,10 +39,10 @@ while line != "":
 			connection_table["ip"] = ip
 			connection_table["date"] = date
 			connection_table["method"] = method
-			#connection_table["uri"] = uri
-			#connection_table["platform"] = client_platform
+			connection_table["uri"] = uri
+			connection_table["code"] = code
+			#connection_table["platform"] = platform
 			#connection_table["domain"] = domain
-			#connection_table["code"] = code
 			#connection_table["os"] = os
 
 	except Exception as e:
