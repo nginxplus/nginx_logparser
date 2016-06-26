@@ -1,0 +1,24 @@
+{
+  "name": "nginx_logparser",
+  "version": "0.0.0",
+  "description": "Log parser for nginx",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikki460/nginx_logparser.git"
+  },
+  "keywords": [
+    "nginx",
+    "python",
+    "logparser"
+  ],
+  "author": "Nikki460 cornBuddy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nikki460/nginx_logparser/issues"
+  },
+  "homepage": "https://github.com/Nikki460/nginx_logparser#readme"
+}
