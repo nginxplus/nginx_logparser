@@ -1,65 +1,58 @@
 #!/usr/bin/python
 import re
+import sqlite3
 
-def idgen(ip):
 
-	id = ""
-	while ip != "":
-		if ip.find(".") == 3 or len(ip) == 3:
-			id += ip[:3]
-			ip = ip[4:]
-		elif ip.find(".") == 2 or len(ip) == 2:
-			id += ("0" + ip[:2])
-			ip = ip[3:]
-		elif ip.find(".") == 1 or len(ip) == 1:
-			id += ("00" + ip[:1])
-			ip = ip[2:]
-	return(id)
+def push_data(data):
+
+#	conn = sqlite3.connect('nginx.db')
+#	cur = conn.cursor()
+	req = 'INSERT INTO access(ip, date, method) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\');'
+	print(req)
+	cur.execute(req)
 
 
 log_path = "/var/log/nginx/"
 log_file = open(log_path + "access.log.1", "r")
-ac_line = log_file.readline()
-connection_table = {}
-statistic_table = {"start":" ", "end":" ", "all_conn":0 , "days":{}}
+line = log_file.readline()
 valid_pages = ["/", "/portfolio" ,"/contacts", "/about"]
+conn = sqlite3.connect('nginx.db')
+conn.isolation_level = None
+cur = conn.cursor()
 
-while ac_line != "":
+
+while line != "":
+
+	connection_table = {}
 	try:
-		page = re.search(r" /[^ /]*", ac_line).group(0)[1:]
-		ip = re.search(r"^[^ ]*", ac_line).group(0)
-		date = re.search(r"[0-9]*/[A-Za-z]{3}/[^ ]+", ac_line).group(0)
-		id = idgen(ip)
+		page = re.search(r" /[^ /]*", line).group(0)[1:]
+		ip = re.search(r"^[^ ]*", line).group(0)
+		date = re.search(r"[0-9]*/[A-Za-z]{3}/[^ ]+", line).group(0)
+		client_req = re.search(r'\"[A-Z]{3,}[^\"]*', line).group(0)[1:]
+		uri = client_req[(client_req.find(" "))+1:(client_req.rfind(" "))]
+		method = client_req[:(client_req.find(" "))] 
+		client_platform = re.search(r'\"[^\"]*\"$', line).group(0)[1:-1]
+		#domain = re.search(r"", line).group(0)
+		#code = re.search(r"", line).group(0)
+		#os = re.search(r"", line).group(0)
 
-		if statistic_table["start"] == " ":
-			statistic_table["start"] = date[0:11]
+		if valid_pages.count(page) is not 0:
 
-		if valid_pages.count(page) != 0:
+			connection_table["ip"] = ip
+			connection_table["date"] = date
+			connection_table["method"] = method
+			#connection_table["uri"] = uri
+			#connection_table["platform"] = client_platform
+			#connection_table["domain"] = domain
+			#connection_table["code"] = code
+			#connection_table["os"] = os
 
-			if type(connection_table.get(id)) == type(None):
-				connection_table[id] = {}
-				connection_table[id]["ip"] = ip
-				connection_table[id]["date"] = date
-				connection_table[id]["connections"] = 1
-			else:
-				connection_table[id]["connections"] += 1
 	except Exception as e:
 		pass
 
-	ac_line = log_file.readline()
+	if len(connection_table) is not 0:
+		push_data(connection_table)
 
+	line = log_file.readline()
 
-if statistic_table["end"] == " ":
-	statistic_table["end"] = date[0:11]
-
-for i in connection_table.keys():
-	if type(statistic_table["days"].get(connection_table[i]["date"][0:11])) == type(None):
-		statistic_table["days"][connection_table[i]["date"][0:11]] = {}
-		statistic_table["days"][connection_table[i]["date"][0:11]]["conn"] = connection_table[i]["connections"]
-
-	elif type(statistic_table["days"].get(connection_table[i]["date"][0:11])) != type(None):
-		statistic_table["days"][connection_table[i]["date"][0:11]]["conn"] += connection_table[i]["connections"]
-
-	statistic_table["all_conn"] += connection_table[i]["connections"]
-
-print statistic_table
+conn.close()
