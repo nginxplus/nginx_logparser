@@ -1,2 +1,4 @@
 node_modules/
-frontend/jspm_packages/
+jspm_packages/
+mocha.opts
+coverate/
