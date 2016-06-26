@@ -2,11 +2,10 @@
 ***
 ## Plan:
 ***
-1. Statistics using following format: 
+1. Statistics using following format:
 
-        ID; IP; DateTime; HTTP Method; URI; Domain; Answer code; OS.
         {
-            "id":123,                       // id 
+            "id":123,                       // id
             "ip":"46.216.14.248",           // client's ip
             "date":"25/Jun/2016:11:18:00",  // access date time
             "method":"GET",                 // http request method
