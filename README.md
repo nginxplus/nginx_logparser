@@ -16,7 +16,7 @@
         }
 
 2. Service managnment ("Start/Stop/Restart/Reload/Force-reload Buttons").
+
 3. Configuring service using web-forms or plain text.
+
 4. Perfect backup (writing needful data to db and doing backups daily).
-
-
