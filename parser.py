@@ -1,56 +1,69 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import re
 import sqlite3
 
 
-def push_data(data):
+def push_sqlite(data):
 
-	req = 'INSERT INTO access(ip, date, method, uri, code) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\', \'' + data["uri"] + '\', \'' + data["code"] + '\');'
-	cur.execute(req)
+	conn = sqlite3.connect('/usr/share/nginx_logs.db')
+	conn.isolation_level = None
+	cur = conn.cursor()
+	req = 'INSERT INTO access(ip, date, method, uri, code, domain, platform) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\', \'' + data["uri"] + '\', \'' + data["code"] + '\', \'' + data["domain"] + '\', \'' + data["platform"] + '\');'
 
-
-log_path = "/var/log/nginx/"
-log_file = open(log_path + "access.log.1", "r")
-line = log_file.readline()
-valid_pages = ["/", "/portfolio" ,"/contacts", "/about"]
-conn = sqlite3.connect('nginx.db')
-conn.isolation_level = None
-cur = conn.cursor()
-
-
-while line != "":
-
-	connection_table = {}
 	try:
-		page = re.search(r" /[^ /]*", line).group(0)[1:]
-		ip = re.search(r"^[^ ]*", line).group(0)
-		date = re.search(r"[0-9]*/[A-Za-z]{3}/[^ ]+", line).group(0)
-		client_req = re.search(r'\"[A-Z]{3,}[^\"]*', line).group(0)[1:]
-		uri = client_req[(client_req.find(" "))+1:(client_req.rfind(" "))]
-		method = client_req[:(client_req.find(" "))] 
-		code = re.search(r"[ ][0-9]{3}[ ]", line).group(0)[1:-1]
-		client_platform = re.search(r'\"[^\"]*\"$', line).group(0)[1:-1]
-		#platform = re.search(r"", line).group(0)
-		#domain = re.search(r"", line).group(0)
-		#os = re.search(r"", line).group(0)
+		cur.execute(req)
+	except:
+		req_t = "CREATE TABLE access(id INTEGER PRIMARY KEY AUTOINCREMENT, ip TEXT NOT NULL, date TEXT , method TEXT , uri TEXT , code TEXT , domain TEXT , platform TEXT);"
+		cur.execute(req_t)
+		cur.execute(req)
 
-		if valid_pages.count(page) is not 0:
+	conn.close()
 
-			connection_table["ip"] = ip
-			connection_table["date"] = date
-			connection_table["method"] = method
-			connection_table["uri"] = uri
-			connection_table["code"] = code
-			#connection_table["platform"] = platform
-			#connection_table["domain"] = domain
-			#connection_table["os"] = os
 
-	except Exception as e:
-		pass
-
-	if len(connection_table) is not 0:
-		push_data(connection_table)
-
+def main():
+	log_path = "/var/log/nginx/"
+	log_file = open(log_path + "access.log.1", "r")
 	line = log_file.readline()
+	valid_pages = ["/", "/portfolio" ,"/contacts", "/about"]
 
-conn.close()
+
+	while line != "":
+
+		connection_table = {}
+		try:
+			page = re.search(r" /[^ /]*", line).group(0)[1:]
+			ip = re.search(r"^[^ ]*", line).group(0)
+			date = re.search(r"[0-9]*/[A-Za-z]{3}/[^ ]+", line).group(0)
+			client_req = re.search(r'\"[A-Z]{3,}[^\"]*', line).group(0)[1:]
+			uri = client_req[(client_req.find(" "))+1:(client_req.rfind(" "))]
+			method = client_req[:(client_req.find(" "))] 
+			code = re.search(r"[ ][0-9]{3}[ ]", line).group(0)[1:-1]
+			client_platform = re.search(r'\"[^\"]*\"$', line).group(0)[1:-1]
+			domain = re.search(r'\"http\:\/\/[^\/]*\/', line)
+
+			if type(domain) is type(None):
+				domain = "-"
+			else:
+				domain = domain.group(0)[1:]
+
+			if valid_pages.count(page) is not 0:
+
+				connection_table["ip"] = ip
+				connection_table["date"] = date
+				connection_table["method"] = method
+				connection_table["uri"] = uri
+				connection_table["code"] = code
+				connection_table["domain"] = domain
+				connection_table["platform"] = client_platform
+
+		except Exception as e:
+			print "Something is wrong here: ", e
+
+		if len(connection_table) is not 0:
+			push_sqlite(connection_table)
+
+		line = log_file.readline()
+
+
+if __name__ == "__main__":
+	main()
