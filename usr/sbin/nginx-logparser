@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DEBUG='/dev/null 2>&1'
+
+
+# Rotate NGINX logs
+invoke-rc.d nginx rotate > $DEBUG
+
+# Run nginx_logparser
+/usr/share/nginx_logparser/parser.py > $DEBUG

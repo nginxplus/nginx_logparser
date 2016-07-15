@@ -12,7 +12,7 @@
             "domain":"pv-photo.by",         // domain
             "uri":"/contacts/style.css",    // relative path from project's root
             "code":"200",                   // http response code
-            "os":"Windows NT 6.1"           // client's info
+            "platform":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/51.0.2704.79 Chrome/51.0.2704.79 Safari/537.36"           // client's info
         }
 
 2. Service managnment ("Start/Stop/Restart/Reload/Force-reload Buttons").
