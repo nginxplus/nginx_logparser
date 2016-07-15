@@ -34,7 +34,7 @@
   },
   "jspm": {
     "directories": {
-      "baseURL": "frontend"
+      "baseURL": "usr/share/nginx_logparser/www"
     },
     "dependencies": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-rc.1.0.0",
