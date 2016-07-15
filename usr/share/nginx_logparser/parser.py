@@ -1,17 +1,17 @@
 #!/usr/bin/env python
-#
 import re
 import sqlite3
 
 
 def push_sqlite(data):
 
-	conn = sqlite3.connect('/usr/share/nginx_logparser/nginx_logs.db')
-	conn.isolation_level = None
-	cur = conn.cursor()
-	req = 'INSERT INTO access(ip, date, method, uri, code, domain, platform) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\', \'' + data["uri"] + '\', \'' + data["code"] + '\', \'' + data["domain"] + '\', \'' + data["platform"] + '\');'
-	#print data
-	conn.close()
+	#conn = sqlite3.connect('/usr/share/nginx_logparser/nginx_logs.db')
+	#conn.isolation_level = None
+	#cur = conn.cursor()
+	#req = 'INSERT INTO access(ip, date, method, uri, code, domain, platform) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\', \'' + data["uri"] + '\', \'' + data["code"] + '\', \'' + data["domain"] + '\', \'' + data["platform"] + '\');'
+
+	print data
+	#conn.close()
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
 			date = re.search(r"[0-9]*/[A-Za-z]{3}/[^ ]+", line).group(0)
 			client_req = re.search(r'\"[A-Z]{3,}[^\"]*', line).group(0)[1:]
 			uri = client_req[(client_req.find(" "))+1:(client_req.rfind(" "))]
-			method = client_req[:(client_req.find(" "))]
+			method = client_req[:(client_req.find(" "))] 
 			code = re.search(r"[ ][0-9]{3}[ ]", line).group(0)[1:-1]
 			client_platform = re.search(r'\"[^\"]*\"$', line).group(0)[1:-1]
 			domain = re.search(r'\"http\:\/\/[^\/]*\/', line)
