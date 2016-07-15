@@ -28,7 +28,6 @@
 {'domain': '-', 'code': '200', 'ip': '5.255.250.48', 'uri': '/about/', 'platform': 'Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)', 'date': '10/Jul/2016:13:13:39', 'method': 'GET'},
 {'domain': '-', 'code': '200', 'ip': '66.102.9.124', 'uri': '/', 'platform': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.75 Safari/537.36 Google Favicon', 'date': '10/Jul/2016:13:50:22', 'method': 'GET'},
 {'domain': '-', 'code': '200', 'ip': '109.67.51.53', 'uri': '/portfolio/images/waiting_child.jpg', 'platform': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 YaBrowser/16.6.1.30117 Yowser/2.5 Safari/537.36', 'date': '10/Jul/2016:14:52:25', 'method': 'GET'},
-Something is wrong here:  'NoneType' object has no attribute 'group'
 {'domain': '-', 'code': '200', 'ip': '157.55.39.103', 'uri': '/', 'platform': 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)', 'date': '11/Jul/2016:00:22:02', 'method': 'GET'},
 {'domain': '-', 'code': '200', 'ip': '66.249.64.240', 'uri': '/', 'platform': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', 'date': '11/Jul/2016:01:25:55', 'method': 'GET'},
 {'domain': '-', 'code': '200', 'ip': '51.255.65.44', 'uri': '/', 'platform': 'Mozilla/5.0 (compatible; AhrefsBot/5.1; +http://ahrefs.com/robot/)', 'date': '11/Jul/2016:01:38:27', 'method': 'GET'},
