@@ -7,3 +7,11 @@ readFile(`${__dirname}/fixture.json`, (err, data) => {
     throw err;
   testObject = data;
 });
+
+describe('#http', function() {
+  describe('get', function() {
+    it('write some code', function() {
+      expect(true).to.be.false;
+    });
+  });
+});
