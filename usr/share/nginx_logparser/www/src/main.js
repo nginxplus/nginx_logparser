@@ -1,5 +1,5 @@
 /**
- * Class representing main view
+ * Class represents main view
  */
 export class Main {
   /**
