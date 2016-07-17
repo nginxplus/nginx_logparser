@@ -6,12 +6,12 @@ chai.use(chaiAsPromised);
 
 import Http from './../src/helpers/http.js';
 
-let testObject = null;
-readFile(`${__dirname}/fixture.json`, (err, data) => {
-  if (err)
-    throw err;
-  testObject = data;
-});
+//let testObject = null;
+//readFile(`${__dirname}/fixture.json`, (err, data) => {
+//  if (err)
+//    throw err;
+//  testObject = data;
+//});
 
 describe('Http', function() {
   it('should be a function', function() {
@@ -33,5 +33,28 @@ describe('Http', function() {
       const promise = Http.get();
       return expect(promise).to.be.rejectedWith(Error);
     });
+  });
+
+  describe('#_isSuccessCode', function() {
+    it('should return true if status code === 200', function() {
+      const OK = 200;
+      return expect(Http._isSuccessCode(OK)).to.be.true;
+    });
+    it('should return true if status code === 201', function() {
+      const CREATED = 201;
+      return expect(Http._isSuccessCode(CREATED)).to.be.true;
+    });
+    it('should return false if status code <= 300', function() {
+      const MULTIPLE_CHOICES = 300;
+      const INTERNAL_SERVER_ERROR = 500;
+      const NEXT_TYPE = 100;
+      for (let httpResponseCode = MULTIPLE_CHOICES;
+          httpResponseCode <= INTERNAL_SERVER_ERROR;
+          httpResponseCode += NEXT_TYPE)
+        expect(Http._isSuccessCode(httpResponseCode)).to.be.false;
+    });
+  });
+  describe('#_checkStatus', function() {
+
   });
 });
