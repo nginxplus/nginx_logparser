@@ -1,17 +1,16 @@
 import chai from 'chai';
 const expect = chai.expect;
-import { readFile } from 'fs';
 import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
 
 import Http from './../src/helpers/http.js';
 
-//let testObject = null;
-//readFile(`${__dirname}/fixture.json`, (err, data) => {
-//  if (err)
-//    throw err;
-//  testObject = data;
-//});
+// let testObject = null;
+// readFile(`${__dirname}/fixture.json`, (err, data) => {
+//   if (err)
+//     throw err;
+//   testObject = data;
+// });
 
 describe('Http', function() {
   it('should be a function', function() {
@@ -54,7 +53,39 @@ describe('Http', function() {
         expect(Http._isSuccessCode(httpResponseCode)).to.be.false;
     });
   });
-  describe('#_checkStatus', function() {
 
+  describe('#_checkStatus', function() {
+    it('should return same response when status is ok', function() {
+      const mock = {
+        status: 200,
+      };
+      const result = Http._checkStatus(mock);
+      return expect(result).to.be.deep.equals(mock);
+    });
+    it('should throw error with http status text message '
+        + 'if status code is not ok', function() {
+      const mock = {
+        status: 300,
+        statusText: 'Multiple choices',
+      };
+      const checkStatusCallback = () => Http._checkStatus(mock);
+      expect(checkStatusCallback).to.throw(mock.statusText);
+    });
+    it('error should contain response object', function() {
+      const mock = {
+        status: 300,
+        statusText: 'Multiple choices',
+      };
+      const catchError = () => {
+        try {
+          Http._checkStatus(mock);
+        } catch(e) {
+          return e;
+        }
+      }
+      const errorObject = catchError();
+      expect(errorObject).to.be.an('error');
+      expect(errorObject.response).to.be.deep.equals(mock);
+    });
   });
 });
