@@ -30,7 +30,6 @@ export function lint() {
 
 export function test() {
   return gulp.src(pathTo.tests, {
-      since: gulp.lastRun('test'),
       read: false,
     })
     .pipe(mocha())
