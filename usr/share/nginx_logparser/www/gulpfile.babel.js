@@ -12,6 +12,8 @@ const pathTo = {
   tests: __dirname + '/test/**/*.test.js',
 };
 
+const doNothing = () => null;
+
 export function clearConsole(cb) {
   clear();
   cb();
@@ -31,7 +33,8 @@ export function test() {
       since: gulp.lastRun('test'),
       read: false,
     })
-    .pipe(mocha());
+    .pipe(mocha())
+    .on('error', doNothing);
 }
 
 export default function dev() {
