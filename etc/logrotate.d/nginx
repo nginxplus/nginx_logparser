@@ -1,7 +1,7 @@
 /var/log/nginx/*.log {
-	weekly
+	hourly
 	missingok
-	rotate 52
+	rotate 10
 	compress
 	delaycompress
 	notifempty
@@ -14,7 +14,7 @@
 	endscript
 	postrotate
 		invoke-rc.d nginx rotate >/dev/null 2>&1
-		/usr/share/nginx_logparser/parser.py
+		/usr/share/nginx_logparser/parser.py >/dev/null 2>&1
 	endscript
 }
 

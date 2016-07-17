@@ -12,7 +12,8 @@ def push_sqlite(data):
 	conn.isolation_level = None
 	cur = conn.cursor()
 	req = 'INSERT INTO access(ip, date, method, uri, code, domain, platform) VALUES (\'' + data["ip"] + '\', \'' + data["date"] + '\', \'' + data["method"] + '\', \'' + data["uri"] + '\', \'' + data["code"] + '\', \'' + data["domain"] + '\', \'' + data["platform"] + '\');'
-	#print data
+	print"Request to DB: ", req
+	cur.execute(req)
 	conn.close()
 
 
@@ -21,7 +22,7 @@ def to_unixtime(timestamp):
 	replace = {"Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06", "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"}
 	timestamp = timestamp[:3] + replace[timestamp[3:6]] + timestamp[6:]
 	unixtime = time.mktime(datetime.datetime.strptime(timestamp, "%d/%m/%Y:%H:%M:%S").timetuple())
-	return (unixtime)
+	return (str(unixtime))
 
 
 def main():

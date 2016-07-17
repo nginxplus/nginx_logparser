@@ -1,10 +1,22 @@
 #!/bin/bash
+#
+#
 
-DEBUG='/dev/null 2>&1'
-
-
-# Rotate NGINX logs
-invoke-rc.d nginx rotate > $DEBUG
-
-# Run nginx_logparser
-/usr/share/nginx_logparser/parser.py > $DEBUG
+case "$1" in
+	start)
+		echo "Rotating Nginx logs"
+		logrotate -f /etc/logrotate.d/nginx > /dev/null 2>&1
+		echo "Push data to database"
+		/usr/share/nginx_logparser/parser.py > /dev/null 2>&1
+		;;
+	debug)
+		echo "Run in debug mode"
+		echo "Rotating Nginx logs"
+		logrotate -f /etc/logrotate.d/nginx
+		echo "Push data to database"
+		/usr/share/nginx_logparser/parser.py
+		;;
+	*)
+		echo $"Usage: $0 {start|debug}"
+		exit 1
+esac
