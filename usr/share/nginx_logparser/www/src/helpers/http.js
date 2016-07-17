@@ -37,8 +37,8 @@ export default class Http {
    */
   static get(url) {
     // TODO: what should we do on errors?
+    // TODO: parse response and write some spec for it
     return fetch(url)
-        .then(this.checkStatus)
-        .then(this.parseJson);
+        .then(this.checkStatus);
   }
 }
