@@ -19,7 +19,7 @@ describe('Http', function() {
       expect(Http.get).to.be.a('function');
     });
     it('should return promise', function() {
-      expect(Http.get()).to.be.a('Promise');
+      expect(Http.get()).to.be.a('promise');
     });
   });
 });
