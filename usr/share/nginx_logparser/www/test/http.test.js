@@ -1,5 +1,6 @@
-const expect = require('chai').expect;
-const readFile = require('fs').readFile;
+import { expect } from 'chai';
+import { readFile } from 'fs';
+import Http from './../src/helpers/http.js';
 
 let testObject = null;
 readFile(`${__dirname}/fixture.json`, (err, data) => {
@@ -8,10 +9,17 @@ readFile(`${__dirname}/fixture.json`, (err, data) => {
   testObject = data;
 });
 
-describe('#http', function() {
-  describe('get', function() {
-    it('write some code', function() {
-      expect(true).to.be.false;
+describe('Http', function() {
+  it('should be a function', function() {
+    expect(Http).to.be.a('function');
+  });
+
+  describe('#get', function() {
+    it('should be function', function() {
+      expect(Http.get).to.be.a('function');
+    });
+    it('should return promise', function() {
+      expect(Http.get()).to.be.a('Promise');
     });
   });
 });
