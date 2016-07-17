@@ -9,7 +9,7 @@ const isDevelopment = !process.env.ENV
 
 const pathTo = {
   src: __dirname + '/src/**/*.js',
-  tests: __dirname + '/test/**/*.js',
+  tests: __dirname + '/test/**/*.test.js',
 };
 
 export function clearConsole(cb) {
