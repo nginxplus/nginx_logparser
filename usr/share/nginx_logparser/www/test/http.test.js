@@ -15,7 +15,8 @@ const throwError = function(error) {
 };
 const createServer = (status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) => {
   return http.createServer((request, response) => {
-    request.on('error', throwError)
+    request
+      .on('error', throwError)
       .on('end', () => {
         response.on('error', throwError);
         response.writeHead(status, {'Content-Type': 'text/plain'});
@@ -44,11 +45,10 @@ describe('Http', function() {
       const promise = Http.get();
       return expect(promise).to.be.rejectedWith(Error);
     });
-    // TODO: create server that return simple response
-    it('should return response body if OK', function() {
+    it('should return response body if OK', function(cb) {
       createServer().listen(DEFAULT_PORT);
-      return expect(Http.get(DEFAULT_URL)).to.eventually
-        .be.equal(DEFAULT_MESSAGE);
+      const promise = Http.get(DEFAULT_URL);
+      return expect(promise).to.become(DEFAULT_MESSAGE);
     });
   });
 
