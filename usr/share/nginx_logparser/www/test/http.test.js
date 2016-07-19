@@ -1,3 +1,4 @@
+import http from 'http';
 import chai from 'chai';
 const expect = chai.expect;
 import chaiAsPromised from 'chai-as-promised';
@@ -5,12 +6,23 @@ chai.use(chaiAsPromised);
 
 import Http from './../src/helpers/http.js';
 
-// let testObject = null;
-// readFile(`${__dirname}/fixture.json`, (err, data) => {
-//   if (err)
-//     throw err;
-//   testObject = data;
-// });
+const DEFAULT_MESSAGE = 'hello world';
+const DEFAULT_STATUS = 200;
+const DEFAULT_PORT = 8080;
+const DEFAULT_URL = `http://localhost:${DEFAULT_PORT}`;
+const throwError = function(error) {
+  throw error;
+};
+const createServer = (status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) => {
+  return http.createServer((request, response) => {
+    request.on('error', throwError)
+      .on('end', () => {
+        response.on('error', throwError);
+        response.writeHead(status, {'Content-Type': 'text/plain'});
+        response.end(message);
+      });
+  });
+};
 
 describe('Http', function() {
   it('should be a function', function() {
@@ -33,7 +45,11 @@ describe('Http', function() {
       return expect(promise).to.be.rejectedWith(Error);
     });
     // TODO: create server that return simple response
-    it('should return http response');
+    it('should return response body if OK', function() {
+      createServer().listen(DEFAULT_PORT);
+      return expect(Http.get(DEFAULT_URL)).to.eventually
+        .be.equal(DEFAULT_MESSAGE);
+    });
   });
 
   describe('#_isSuccessCode', function() {
@@ -60,9 +76,10 @@ describe('Http', function() {
     it('should return same response when status is ok', function() {
       const mock = {
         status: 200,
+        body: DEFAULT_MESSAGE,
       };
       const result = Http._checkStatus(mock);
-      return expect(result).to.be.deep.equals(mock);
+      return expect(result).to.be.deep.equals(mock.body);
     });
     it('should throw error with http status text message '
         + 'if status code is not ok', function() {
