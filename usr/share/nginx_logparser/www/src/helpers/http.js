@@ -15,7 +15,8 @@ export default class Http {
     return code >= SUCCESS_CODE && code < REDIRECT_CODE;
   }
   /**
-   * Method checks results for a status code and return it if it's okay
+   * Method checks results for a status code and return http body if it's
+   * okay
    * @param {http-response-object} response - Http response object
    * @returns {http-response-object} Same as input
    * @throws {Error} If bad code
@@ -23,7 +24,7 @@ export default class Http {
   static _checkStatus(response) {
     // TODO: what should we do on redirections?
     if (this._isSuccessCode(response.status))
-      return response;
+      return response.body;
     else {
       const error = new Error(response.statusText);
       error.response = response;
@@ -37,7 +38,6 @@ export default class Http {
    */
   static get(url) {
     // TODO: what should we do on errors?
-    // TODO: parse response and write some spec for it
     return fetch(url)
         .then(this.checkStatus);
   }
