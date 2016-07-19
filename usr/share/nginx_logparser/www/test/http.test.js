@@ -21,17 +21,19 @@ describe('Http', function() {
     it('should be function', function() {
       return expect(Http.get).to.be.a('function');
     });
-    it('should return promise', function() {
+    it('should to be a promise', function() {
       return expect(Http.get()).to.be.a('promise');
     });
     it('should be rejected on null', function() {
       const promise = Http.get(null);
       return expect(promise).to.be.rejectedWith(Error);
     });
-    it('should be rejected on empty argumets', function() {
+    it('should be rejected on empty arguments', function() {
       const promise = Http.get();
       return expect(promise).to.be.rejectedWith(Error);
     });
+    // TODO: create server that return simple response
+    it('should return http response');
   });
 
   describe('#_isSuccessCode', function() {
@@ -77,12 +79,14 @@ describe('Http', function() {
         statusText: 'Multiple choices',
       };
       const catchError = () => {
+        let error = null;
         try {
           Http._checkStatus(mock);
         } catch(e) {
-          return e;
+          error = e;
         }
-      }
+        return error;
+      };
       const errorObject = catchError();
       expect(errorObject).to.be.an('error');
       expect(errorObject.response).to.be.deep.equals(mock);
