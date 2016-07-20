@@ -1,8 +1,9 @@
 import chai from 'chai';
-import { createServer, DEFAULT_MESSAGE } from './devServer';
 const expect = chai.expect;
 import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
+
+import { createServer, DEFAULT_MESSAGE } from './devServer';
 
 import Http from './../src/helpers/http.js';
 
