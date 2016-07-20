@@ -2,9 +2,15 @@ import http from 'http';
 
 const DEFAULT_STATUS = 200;
 
-export const DEFAULT_MESSAGE = 'hello world';
+const DEFAULT_MESSAGE = 'hello world';
 
-export function createServer(status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) {
+/**
+ * Function creates simple development server
+ * @param {Number} status - Status code of response
+ * @param {String} message - Response body
+ * @returns {http-server} Http server with given params
+ */
+function createServer(status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) {
   const doNothing = () => null;
   const throwError = function(error) {
     throw error;
@@ -19,5 +25,6 @@ export function createServer(status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) {
         response.end(message);
       });
   });
-};
-;
+}
+
+export { createServer, DEFAULT_MESSAGE };
