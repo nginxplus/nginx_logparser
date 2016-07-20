@@ -21,7 +21,7 @@ const createServer = (status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) => {
       .on('data', doNothing)
       .on('end', () => {
         response.on('error', throwError);
-        response.writeHead(status, {'Content-Type': 'text/plain'});
+        response.writeHead(status, {'Content-Type': 'application/json'});
         response.end(message);
       });
   });
