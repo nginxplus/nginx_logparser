@@ -1,31 +1,10 @@
-import http from 'http';
 import chai from 'chai';
+import { createServer, DEFAULT_MESSAGE } from './devServer';
 const expect = chai.expect;
 import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
 
 import Http from './../src/helpers/http.js';
-
-const DEFAULT_MESSAGE = 'hello world';
-const DEFAULT_STATUS = 200;
-const DEFAULT_PORT = 8080;
-const DEFAULT_URL = `http://localhost:${DEFAULT_PORT}`;
-const throwError = function(error) {
-  throw error;
-};
-const createServer = (status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) => {
-  const doNothing = () => null;
-  return http.createServer((request, response) => {
-    request
-      .on('error', throwError)
-      .on('data', doNothing)
-      .on('end', () => {
-        response.on('error', throwError);
-        response.writeHead(status, {'Content-Type': 'application/json'});
-        response.end(message);
-      });
-  });
-};
 
 describe('Http', function() {
   it('should be a function', function() {
@@ -48,6 +27,8 @@ describe('Http', function() {
       return expect(promise).to.be.rejected;
     });
     it('should return response body if OK', function() {
+      const DEFAULT_PORT = 8080;
+      const DEFAULT_URL = `http://localhost:${DEFAULT_PORT}`;
       createServer().listen(DEFAULT_PORT);
       const promise = Http.get(DEFAULT_URL);
       return Promise.all([
