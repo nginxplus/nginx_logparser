@@ -14,9 +14,11 @@ const throwError = function(error) {
   throw error;
 };
 const createServer = (status=DEFAULT_STATUS, message=DEFAULT_MESSAGE) => {
+  const doNothing = () => null;
   return http.createServer((request, response) => {
     request
       .on('error', throwError)
+      .on('data', doNothing)
       .on('end', () => {
         response.on('error', throwError);
         response.writeHead(status, {'Content-Type': 'text/plain'});
@@ -39,16 +41,20 @@ describe('Http', function() {
     });
     it('should be rejected on null', function() {
       const promise = Http.get(null);
-      return expect(promise).to.be.rejectedWith(Error);
+      return expect(promise).to.be.rejected;
     });
     it('should be rejected on empty arguments', function() {
       const promise = Http.get();
-      return expect(promise).to.be.rejectedWith(Error);
+      return expect(promise).to.be.rejected;
     });
-    it('should return response body if OK', function(cb) {
+    it.only('should return response body if OK', function() {
       createServer().listen(DEFAULT_PORT);
       const promise = Http.get(DEFAULT_URL);
-      return expect(promise).to.become(DEFAULT_MESSAGE);
+      return Promise.all([
+        expect(promise).to.be.fulfilled,
+        expect(promise).to.eventually.be.a('string'),
+        expect(promise).to.become(DEFAULT_MESSAGE),
+      ]);
     });
   });
 
