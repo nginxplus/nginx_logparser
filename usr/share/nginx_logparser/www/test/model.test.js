@@ -37,6 +37,8 @@ describe('Model', function() {
         + 'readonly .url property', function() {
       const testModel = new Model(DEFAULT_URL);
       expect(testModel).to.have.property('url').and.equal(DEFAULT_URL);
+      const urlReassign = () => testModel.url = null;
+      expect(urlReassign).to.throw(TypeError);
     });
     it('should throws exception if url is bad', function() {
       const undefinedUrl = () => new Model();
