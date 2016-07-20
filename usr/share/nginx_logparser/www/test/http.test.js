@@ -47,7 +47,7 @@ describe('Http', function() {
       const promise = Http.get();
       return expect(promise).to.be.rejected;
     });
-    it.only('should return response body if OK', function() {
+    it('should return response body if OK', function() {
       createServer().listen(DEFAULT_PORT);
       const promise = Http.get(DEFAULT_URL);
       return Promise.all([
@@ -79,14 +79,6 @@ describe('Http', function() {
   });
 
   describe('#_checkStatus', function() {
-    it('should return same response when status is ok', function() {
-      const mock = {
-        status: 200,
-        body: DEFAULT_MESSAGE,
-      };
-      const result = Http._checkStatus(mock);
-      return expect(result).to.be.deep.equals(mock.body);
-    });
     it('should throw error with http status text message '
         + 'if status code is not ok', function() {
       const mock = {
