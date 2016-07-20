@@ -31,4 +31,18 @@ describe('Model', function() {
       return expect(promise).to.become(JSON.parse(mock));
     });
   });
+
+  describe('#constructor', function() {
+    it('should return new model object with '
+        + 'readonly .url property', function() {
+      const testModel = new Model(DEFAULT_URL);
+      expect(testModel).to.have.property('url').and.equal(DEFAULT_URL);
+    });
+    it('should throws exception if url is bad', function() {
+      const undefinedUrl = () => new Model();
+      expect(undefinedUrl).to.throw(TypeError);
+      const emptyString = () => new Model('');
+      expect(emptyString).to.throw(TypeError);
+    });
+  });
 });
