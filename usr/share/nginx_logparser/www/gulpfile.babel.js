@@ -21,7 +21,6 @@ export function clearConsole(cb) {
 
 export function lint() {
   return gulp.src([pathTo.src, pathTo.tests], {
-      since: gulp.lastRun('lint'),
       read: true,
     })
     .pipe(eslint())
