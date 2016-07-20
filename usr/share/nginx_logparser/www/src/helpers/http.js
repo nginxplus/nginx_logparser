@@ -23,9 +23,10 @@ export default class Http {
    */
   static _checkStatus(response) {
     // TODO: what should we do on redirections?
-    if (this._isSuccessCode(response.status))
-      return response.body;
-    else {
+    if (this._isSuccessCode(response.status)) {
+      const body = response.body._readableState.buffer.head.data.toString();
+      return body;
+    } else {
       const error = new Error(response.statusText);
       error.response = response;
       throw error;
@@ -37,8 +38,10 @@ export default class Http {
    * @returns {promise} http response
    */
   static get(url) {
+    // context losts inside fetch, we don't want it
+    const checkStatus = this._checkStatus.bind(this);
     // TODO: what should we do on errors?
     return fetch(url)
-        .then(this.checkStatus);
+        .then(checkStatus);
   }
 }
