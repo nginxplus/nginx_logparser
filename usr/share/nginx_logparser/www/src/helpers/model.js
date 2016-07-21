@@ -5,6 +5,15 @@ import Http from './http';
  */
 export default class Model {
   /**
+   * Returns JSON object from model's url
+   * @returns {Object} JSON if url was given else null
+   */
+  get data() {
+    if (!this.url)
+      return null;
+    return this.constructor._parse(this.url);
+  }
+  /**
    * Returns model url
    * @returns {String} Url to remote resource
    */
@@ -12,23 +21,21 @@ export default class Model {
     return this._url;
   }
   /**
+   * Set url
+   * @param {String} value - Url to remote resource
+   */
+  set url(value) {
+    if (typeof value !== 'string' || !value)
+      throw new TypeError(`Valid url expected, "${value}" was given`);
+    this._url = value;
+  }
+  /**
    * Creates new model instanse with given url
    * @param {String} url - Url to remote resource
    * @constructor
    */
   constructor(url) {
-    if (typeof url !== 'string' || !url)
-      throw new TypeError(`Valid url expected, "${url}" was given`);
-    this._url = url;
-  }
-  /**
-   * Returns JSON object from model's url
-   * @returns {Object} JSON if url was given else null
-   */
-  get() {
-    if (!this.url)
-      return null;
-    return this.constructor._parse(this.url);
+    this.url = url;
   }
   /**
    * Function makes request to url and parse response to JSON
