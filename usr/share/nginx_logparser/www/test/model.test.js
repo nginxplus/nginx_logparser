@@ -19,7 +19,7 @@ describe('Model', function() {
     return expect(Model).to.be.a('function');
   });
 
-  describe('#constructor', function() {
+  describe('#constructor()', function() {
     it('should return new model object with '
         + 'readonly .url property', function() {
       const testModel = new Model(DEFAULT_URL);
@@ -54,7 +54,7 @@ describe('Model', function() {
     });
   });
 
-  describe('#_parse', function() {
+  describe('#_parse()', function() {
     it('should be function', function() {
       return expect(Model._parse).to.be.a('function');
     });

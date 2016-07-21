@@ -12,7 +12,7 @@ describe('Http', function() {
     return expect(Http).to.be.a('function');
   });
 
-  describe('#get', function() {
+  describe('#get()', function() {
     it('should be function', function() {
       return expect(Http.get).to.be.a('function');
     });
@@ -40,7 +40,7 @@ describe('Http', function() {
     });
   });
 
-  describe('#_isSuccessCode', function() {
+  describe('#_isSuccessCode()', function() {
     it('should return true if status code === 200', function() {
       const OK = 200;
       return expect(Http._isSuccessCode(OK)).to.be.true;
@@ -60,7 +60,7 @@ describe('Http', function() {
     });
   });
 
-  describe('#_checkStatus', function() {
+  describe('#_checkStatus()', function() {
     it('should throw error with http status text message '
         + 'if status code is not ok', function() {
       const mock = {
