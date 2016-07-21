@@ -19,6 +19,37 @@ describe('Model', function() {
     return expect(Model).to.be.a('function');
   });
 
+  describe('#constructor', function() {
+    it('should return new model object with '
+        + 'readonly .url property', function() {
+      const testModel = new Model(DEFAULT_URL);
+      expect(testModel).to.have.property('url').and.equal(DEFAULT_URL);
+      const urlReassign = () => {
+        testModel.url = null;
+      };
+      expect(urlReassign).to.throw(TypeError);
+    });
+    it('should throws exception if url is bad', function() {
+      const undefinedUrl = () => new Model();
+      expect(undefinedUrl).to.throw(TypeError);
+      const emptyString = () => new Model('');
+      expect(emptyString).to.throw(TypeError);
+    });
+  });
+
+  describe('#get', function() {
+    it('should return promise if url was given', function() {
+      const promise = new Model(DEFAULT_URL).get();
+      expect(promise).to.be.a('promise');
+      return expect(promise).to.become(JSON.parse(mock));
+    });
+    it('should return null if no url in model object', function() {
+      const model = new Model(DEFAULT_URL);
+      model._url = null;
+      return expect(model.get()).to.be.null;
+    });
+  });
+
   describe('#_parse', function() {
     it('should be function', function() {
       return expect(Model._parse).to.be.a('function');
@@ -29,22 +60,6 @@ describe('Model', function() {
     it('should return string representation of object', function() {
       const promise = Model._parse(DEFAULT_URL);
       return expect(promise).to.become(JSON.parse(mock));
-    });
-  });
-
-  describe('#constructor', function() {
-    it('should return new model object with '
-        + 'readonly .url property', function() {
-      const testModel = new Model(DEFAULT_URL);
-      expect(testModel).to.have.property('url').and.equal(DEFAULT_URL);
-      const urlReassign = () => testModel.url = null;
-      expect(urlReassign).to.throw(TypeError);
-    });
-    it('should throws exception if url is bad', function() {
-      const undefinedUrl = () => new Model();
-      expect(undefinedUrl).to.throw(TypeError);
-      const emptyString = () => new Model('');
-      expect(emptyString).to.throw(TypeError);
     });
   });
 });
