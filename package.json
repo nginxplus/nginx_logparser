@@ -44,6 +44,7 @@
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-rc.1.0.0",
       "aurelia-framework": "npm:aurelia-framework@^1.0.0-rc.1.0.0",
       "bootstrap": "github:twbs/bootstrap@^3.3.6",
+      "chart.js": "npm:chart.js@^2.2.0",
       "font-awesome": "npm:font-awesome@^4.6.3"
     },
     "devDependencies": {
