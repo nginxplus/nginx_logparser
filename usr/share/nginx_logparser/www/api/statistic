@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import cgi
+import sys
+import codecs
+import sqlite3
+import json
+
+def sql_req(date):
+
+	conn = sqlite3.connect('/usr/share/nginx_logparser/nginx_logs.db')
+	c = conn.cursor()
+	req = "SELECT * FROM access WHERE date>=" + date + ";"
+	data = []
+	for val in c.execute(req):
+		data.append({'ip':val[1], 'date': val[2], 'method': val[3], 'uri': val[4], 'code': val[5], 'domain': val[6], 'platform': val[7]})
+	c.close()
+	return (data)
+
+
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+
+form = cgi.FieldStorage()
+timestamp = form.getfirst("timestamp", "empty")
+table = sql_req(timestamp)
+
+print("Status: 200 OK")
+print("Content-type: application/json\n")
+print(json.dumps({'_data':table, '_meta':{'elements': len(table)}}))
