@@ -5,7 +5,7 @@ chai.use(chaiAsPromised);
 
 import { createServer } from './devServer';
 import { readFileSync } from 'fs';
-const DEFAULT_PORT = 8081;
+const DEFAULT_PORT = 3001;
 const DEFAULT_URL = `http://localhost:${DEFAULT_PORT}`;
 const OK = 200;
 const fixturePath = `${__dirname}/fixture.json`;

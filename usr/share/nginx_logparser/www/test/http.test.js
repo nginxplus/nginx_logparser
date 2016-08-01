@@ -28,7 +28,7 @@ describe('Http', function() {
       return expect(promise).to.be.rejected;
     });
     it('should return response body if OK', function() {
-      const DEFAULT_PORT = 8080;
+      const DEFAULT_PORT = 3000;
       const DEFAULT_URL = `http://localhost:${DEFAULT_PORT}`;
       createServer().listen(DEFAULT_PORT);
       const promise = Http.get(DEFAULT_URL);
