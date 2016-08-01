@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Nikki460/nginx_logparser#readme",
   "devDependencies": {
+    "aurelia-testing": "^1.0.0-beta.2.0.0",
     "babel": "^6.5.2",
     "babel-core": "^6.10.4",
     "babel-polyfill": "^6.9.1",
@@ -34,27 +35,16 @@
     "gulp-eslint": "^2.0.0",
     "gulp-spawn-mocha": "^2.2.2",
     "jspm": "^0.16.39",
-    "mocha": "^2.5.3"
-  },
-  "jspm": {
-    "directories": {
-      "baseURL": "usr/share/nginx_logparser/www"
-    },
-    "dependencies": {
-      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-rc.1.0.0",
-      "aurelia-framework": "npm:aurelia-framework@^1.0.0-rc.1.0.0",
-      "aurelia-testing": "npm:aurelia-testing@^1.0.0-beta.2.0.0",
-      "bootstrap": "github:twbs/bootstrap@^3.3.6",
-      "chart.js": "npm:chart.js@^2.2.0",
-      "font-awesome": "npm:font-awesome@^4.6.3"
-    },
-    "devDependencies": {
-      "babel": "npm:babel-core@^5.8.24",
-      "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "core-js": "npm:core-js@^1.1.4"
-    }
+    "mocha": "^2.5.3",
+    "systemjs": "^0.19.36"
   },
   "dependencies": {
+    "aurelia-bootstrapper": "^1.0.0",
+    "aurelia-framework": "^1.0.1",
+    "bootstrap": "^3.3.7",
+    "chart.js": "^2.2.1",
+    "core-js": "^2.4.1",
+    "font-awesome": "^4.6.3",
     "isomorphic-fetch": "^2.2.1"
   }
 }
