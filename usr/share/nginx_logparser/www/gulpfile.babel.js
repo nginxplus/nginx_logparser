@@ -2,7 +2,6 @@ import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import mocha from 'gulp-spawn-mocha';
 import clear from 'clear';
-import debug from 'gulp-debug';
 
 const isDevelopment = !process.env.ENV
     || process.env.ENV === 'development';
