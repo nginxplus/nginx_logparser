@@ -2,6 +2,8 @@ import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import mocha from 'gulp-spawn-mocha';
 import clear from 'clear';
+import del from 'del';
+import { resolve } from 'path';
 
 const isDevelopment = !process.env.ENV
     || process.env.ENV === 'development';
@@ -9,9 +11,14 @@ const isDevelopment = !process.env.ENV
 const pathTo = {
   src: __dirname + '/src/**/*.js',
   tests: __dirname + '/test/**/*.js',
+  bundle: resolve(__dirname, 'bundle/'),
 };
 
 const doNothing = () => null;
+
+export function clean() {
+  return del(pathTo.bundle);
+}
 
 export function clearConsole(cb) {
   clear();
@@ -35,6 +42,7 @@ export function test() {
 }
 
 export default function dev() {
+  clean();
   gulp.watch([pathTo.src, pathTo.tests],
     gulp.series('clearConsole', 'lint', 'test'));
 }
