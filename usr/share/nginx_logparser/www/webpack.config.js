@@ -1,4 +1,5 @@
 const resolve = require('path').resolve;
+const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
 
 const pathTo = {
   entry: resolve(__dirname, 'src/entry.js'),
@@ -10,5 +11,6 @@ module.exports = {
   output: {
     path: pathTo.bundleDir,
     filename: 'index.bundle.js',
-  }
+  },
+  plugins: [new AureliaWebpackPlugin()],
 };
