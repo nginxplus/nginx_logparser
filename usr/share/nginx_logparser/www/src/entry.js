@@ -1,3 +1,6 @@
+import 'aurelia-webpack-plugin';
+import 'aurelia-framework';
+
 /**
  * The entry point of aurelia application
  * @param {Aurelia} aurelia -- Main aurelia object

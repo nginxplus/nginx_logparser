@@ -12,5 +12,16 @@ module.exports = {
     path: pathTo.bundleDir,
     filename: 'index.bundle.js',
   },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        include: [
+          resolve(__dirname, 'src/'),
+        ],
+        loader: 'babel-loader',
+      },
+    ],
+  },
   plugins: [new AureliaWebpackPlugin()],
 };
