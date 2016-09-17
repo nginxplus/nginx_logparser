@@ -39,18 +39,18 @@ describe('Model', function() {
 
   describe('#data', function() {
     it('should be array', function() {
-      const promise = new Model(DEFAULT_URL).data;
+      const promise = new Model(DEFAULT_URL).data();
       return expect(promise).to.eventually.be.an('array');
     });
     it('should return promise if url was given', function() {
-      const promise = new Model(DEFAULT_URL).data;
+      const promise = new Model(DEFAULT_URL).data();
       expect(promise).to.be.a('promise');
       return expect(promise).to.become(JSON.parse(mock));
     });
     it('should return null if no url in model object', function() {
       const model = new Model(DEFAULT_URL);
       model._url = null;
-      return expect(model.data).to.be.null;
+      return expect(model.data()).to.be.null;
     });
   });
 

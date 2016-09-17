@@ -8,7 +8,7 @@ export default class Model {
    * Returns JSON object from model's url
    * @returns {Object} JSON if url was given else null
    */
-  get data() {
+  data() {
     if (!this.url)
       return null;
     return this.constructor._parse(this.url);
