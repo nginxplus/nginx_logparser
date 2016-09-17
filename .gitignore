@@ -6,3 +6,4 @@ bundle/
 mocha.opts
 .babelrc
 .eslintrc.json
+error.log
