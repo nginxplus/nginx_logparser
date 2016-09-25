@@ -1,7 +1,9 @@
 node_modules/
 jspm_packages/
 coverage/
+bundle/
 
 mocha.opts
 .babelrc
 .eslintrc.json
+error.log

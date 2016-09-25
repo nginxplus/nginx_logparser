@@ -16,7 +16,7 @@ export class App {
         name: 'main',
         moduleId: './main',
         nav: true,
-        title: 'Main',
+        title: 'Main statistics',
       },
     ]);
     this.router = router;

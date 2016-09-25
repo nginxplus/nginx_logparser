@@ -1,5 +1,7 @@
 # NGINX_LOGPARSER
 
+## Plan:
+
 1. Statistics using following format:
 
         {
